@@ -30,7 +30,6 @@ x_pca.head()
 y_color = np.where(y=='Iris-setosa','red',
             np.where(y=='Iris-versicolor','blue','green'))
 x_pca.plot(kind='scatter', x='PC1', y='PC2',c=y_color)
-pca.show()
 
 clf1 = IForest(behaviour="new", max_samples=100) 
 clf1.fit(X)
