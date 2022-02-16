@@ -1,6 +1,7 @@
 
 #confusion matrix with rates
- from sklearn.metrics import confusion_matrix, f1_score, roc_auc_score
+import matplotlib.pyplot as plt
+from sklearn.metrics import confusion_matrix, f1_score, roc_auc_score, roc_curve
 y_true = a_out #actual outliers
 #need to have a column of the predicted outliers for the confusion matrix (saved as y_pred)
 c_mat = confusion_matrix(y_true, y_pred)
