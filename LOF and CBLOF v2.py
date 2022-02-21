@@ -24,7 +24,7 @@ def predplot(y_pred):
     plt.show()
 
 def modelEvals(a_out, y_pred):
-    #potential confusion matrix
+    #confusion matrix
     from sklearn.metrics import confusion_matrix, f1_score, roc_auc_score, roc_curve
     y_true = a_out
     c_mat = confusion_matrix(y_true, y_pred)
@@ -103,8 +103,6 @@ scaler = StandardScaler()
 scaled = scaler.fit_transform(data)
 scaled = pd.DataFrame(scaled)
 
-#print(scaled)
-
 #run PCA
 pca = PCA(2)
 x_pca = pca.fit_transform(scaled)
@@ -155,7 +153,7 @@ y_pred2 = pd.Series(y_preds2)
 print("Predicted Outlier Counts: 0: inliers 1: outliers")
 print(y_pred.value_counts())
 
-#
+#plots of the predicted and actual outliers, run assessments/ confusions matrix
 predplot(y_pred2)
 actualplot(a_out)
 modelEvals(a_out,y_pred2)
