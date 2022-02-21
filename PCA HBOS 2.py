@@ -62,7 +62,7 @@ def modelEvals(a_out, y_pred):
     plt.show()
 
 #read in mat file
-udata = scipy.io.loadmat("wine.mat")
+udata = scipy.io.loadmat("lympho.mat")
 
 
 # create dataframe (add array for column names separately)
@@ -136,30 +136,17 @@ pred_df = pd.DataFrame()
 pred_df['score'] = y_scores
 pred_df['probability'] = predprob['Probability']
 pred_df['prediction'] = y_pred
-pred_df['prediction2'] = np.where(pred_df['score']<5.5, 0, 1)
-predval2 = pred_df['prediction2']
 predval = pred_df['prediction']
-#pred_df['actual'] = a_out
-#pred_df['tots'] = pred_df.iloc[:,4:6].sum(axis=1)
 
-y_pred2 = predval
 
 #print number of Outliers and Inliers
-out_in = pred_df['prediction'].value_counts()
+out_in = predval.value_counts()
 print("Outlier Counts: 0: inliers 1: outliers")
 print(out_in)
-#if out_in[1]:
-    #print("Predicted " + str(out_in[0]) + " inliers and " + str(out_in[1]) + " outliers.") 
-    #elif not out_in[1]:
-            #print("Predicted " + str(out_in[0]) + " inliers and 0 outliers.")
 
         
 print("\n")
 
-
-# summary statistics:
-print(pred_df.groupby('prediction').mean())
-print("\n")
 
         
 #plot with highlighted outliers
