@@ -1,6 +1,6 @@
 # UF IBM Team Outlier Detection Code
 
-This is the repository for the UF-IB Outlier Detection Practicum. Files can be found in the following folders:
+This is the repository for the UF-IBM Outlier Detection Practicum. Files can be found in the following folders:
 
 1. Current Algorithm Code: most up-to-date versions of code for each method
 2. Non-Algorithm Code: for code to be used in other files, but not detection methods (e.g. converting files, generating confusion matrices)
