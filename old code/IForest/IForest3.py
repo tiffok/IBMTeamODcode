@@ -4,7 +4,7 @@
 """
 Created on Tue Feb  1 18:43:40 2022
 
-@author: shaneraudenbush
+@author: Tiffany Okroochukwu
 """
 
 #https://betterprogramming.pub/anomaly-detection-with-isolation-forest-e41f1f55cc6
