@@ -1,4 +1,4 @@
-# IBMTeamODcode
+# UF IBM Team Outlier Detection Code
 
 This is the repository for the UF-IB Outlier Detection Practicum. Files can be found in the following folders:
 
