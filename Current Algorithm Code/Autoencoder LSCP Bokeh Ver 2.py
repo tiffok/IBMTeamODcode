@@ -1,9 +1,9 @@
 #%%
-from bokeh.plotting import figure, show
+from bokeh.plotting import figure, show, output_file
 import panel as pn
 from bokeh.models import ColumnDataSource, HoverTool, WheelZoomTool, ResetTool, PanTool
 from bokeh.transform import factor_cmap
-from bokeh.palettes import Category10
+from bokeh.palettes import Magma3, Inferno3, Colorblind3
 
 import scipy.io
 import pandas as pd
@@ -11,10 +11,10 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
-from pyod.models.hbos import HBOS
 from sklearn.preprocessing import StandardScaler
 from sklearn.decomposition import PCA
 from pyod.models.auto_encoder import AutoEncoder
+from pyod.models.vae import VAE
 from pyod.models.lscp import LSCP
 
 
@@ -58,14 +58,17 @@ def predplot(df):
     p = figure(tools = [hover, WheelZoomTool(), ResetTool(), PanTool()], title='Plot of Predicted Outliers')
     p.scatter(
         'PC1', 'PC2', source = source, 
-        color = factor_cmap('predout', palette=npal, factors=cfactor),
+        color = factor_cmap('predout', palette='Colorblind3', factors=cfactor),
         legend_group = 'predout')
+    
+    output_file("LSCP PredPlot.html")
+    
     show(p)
 
 
 def modelEvals(df):
     from sklearn.metrics import confusion_matrix, f1_score, roc_auc_score, roc_curve, auc, ConfusionMatrixDisplay
-
+    
 
     #plot ROC curve
     nfpr, ntpr, threshold = roc_curve(df['truth'], df['probabilities'], pos_label=0)
@@ -89,8 +92,15 @@ def modelEvals(df):
     print("Predicted Outlier Counts: 0: inliers 1: outliers")
     print(df['predictions'].value_counts())
     
-    #display confusion matrix
+    #confusion matrix
+    
     y_true = df['truth']
+
+    print("confusion matrix: ")
+        #confusion matrix
+    
+    
+    #display confusion matrix
     c_mat = confusion_matrix(y_true, y_pred, labels=[0,1])
     c_disp = ConfusionMatrixDisplay(confusion_matrix=c_mat, display_labels=[0,1])
     c_disp.plot(cmap="bone_r")
@@ -130,10 +140,9 @@ def modelEvals(df):
 
 
 
-
 #read in data
 #read in mat file
-udata = scipy.io.loadmat("wine.mat")
+udata = scipy.io.loadmat("musk.mat")
 
 
 # create dataframe (add array for column names separately)
@@ -171,7 +180,8 @@ print("LSCP method")
 base_estimators = [
     AutoEncoder(hidden_neurons=[25,15,10,2,10,15,25]),
     AutoEncoder(hidden_neurons=[25,10,2,10,25]),
-    AutoEncoder(hidden_neurons=[25,2,2,25])]
+    #AutoEncoder(hidden_neurons=[25,2,2,25]),
+    VAE(encoder_neurons=[32,25,10,12,2],decoder_neurons=[2,12,10,25,32])]
 
 clf = LSCP(detector_list=base_estimators)
 
@@ -228,5 +238,6 @@ y_pred = pd.Series(y_preds)
 predplot(df)
 #actualplot(df)
 modelEvals(df)
+#%%
 
-# %%
+#%%
